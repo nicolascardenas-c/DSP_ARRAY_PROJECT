@@ -37,11 +37,11 @@ A trial is successful if both estimated DoAs are within **2°** of their respect
 ## How to run
 
 1. Download or clone this repository.
-2. Ensure `DSP_DoA_no_snapshots.m` and `spcom.zip` (or both `.mat` files) are in the same folder.
-3. Open **`DSP_DoA_no_snapshots.m`** in MATLAB and click **Run**, or execute:
+2. Ensure `DSP_DoA_Estimation.m` and `spcom.zip` (or both `.mat` files) are in the same folder.
+3. Open **`DSP_DoA_Estimation.m`** in MATLAB and click **Run**, or execute:
 
    ```matlab
-   run('DSP_DoA_no_snapshots.m')
+   run('DSP_DoA_Estimation.m')
    ```
 
 The script automatically extracts `spcom.zip` if necessary. It generates MATLAB figures of the spatial spectra and covariance eigenvalues, and prints the DoA estimates and Monte Carlo metrics in the Command Window. Fixed random seeds are used for reproducibility.
