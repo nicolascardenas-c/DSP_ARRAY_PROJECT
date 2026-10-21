@@ -100,47 +100,47 @@ for i = 1:numel(files)
     plotEigenvalues(eigenvalues, K);
     title('Original covariance eigenvalues');
 
-    %---------------------------------------------------------------------
-    %% PART II - NUMBER OF SNAPSHOTS
-    %---------------------------------------------------------------------
-    % Keep the first 5, 10 or 20 columns of the ORIGINAL observations.
-    % We change only the number of observations used to estimate R.
-    % With N = M = 5, R may be poorly conditioned; MVDR is sensitive
-    % because it solves a linear system involving this matrix.
-
-    % One subplot per snapshot count; save eigenvalues for comparison.
-    figure('Color','w', 'Name',[files{i} ' - Snapshots spectra']);
-    eigSnapshots = zeros(M, numel(snapshotCounts));
-
-    for c = 1:numel(snapshotCounts)
-        % Keep only the first N_short observations and recompute R.
-        N_short = snapshotCounts(c);
-        X_short = X(:,1:N_short);
-        R_short = X_short*X_short'/N_short;
-
-        % Reapply the same three methods to the reduced dataset.
-        [P, eigenvalues] = doaSpectra(R_short, A, K);
-        eigSnapshots(:,c) = eigenvalues;  % Save results for the summary figure
-
-        % Plot the resulting spectra for this observation length.
-        subplot(1,numel(snapshotCounts),c);
-        plotSpectra(theta, P);
-        title(sprintf('N = %d snapshots', N_short));
-        if c == 1
-            legend(methods, 'Location','best');
-        end
-
-        % Print estimated angles to check how they change with N.
-        fprintf('\nN = %d snapshots:\n', N_short);
-        printDoAs(theta, P, K, methods, minProminence);
-    end
-
-    
-    % Compare covariance eigenvalues for all three snapshot counts.
-    figure('Color','w', 'Name',[files{i} ' - Snapshots eigenvalues']);
-    plotEigenvalues(eigSnapshots, K);
-    title('Covariance eigenvalues - number of snapshots');
-    legend(compose('N = %d', snapshotCounts), 'Location','best');
+    % %---------------------------------------------------------------------
+    % %% PART II - NUMBER OF SNAPSHOTS
+    % %---------------------------------------------------------------------
+    % % Keep the first 5, 10 or 20 columns of the ORIGINAL observations.
+    % % We change only the number of observations used to estimate R.
+    % % With N = M = 5, R may be poorly conditioned; MVDR is sensitive
+    % % because it solves a linear system involving this matrix.
+    %
+    % % One subplot per snapshot count; save eigenvalues for comparison.
+    % figure('Color','w', 'Name',[files{i} ' - Snapshots spectra']);
+    % eigSnapshots = zeros(M, numel(snapshotCounts));
+    %
+    % for c = 1:numel(snapshotCounts)
+    %     % Keep only the first N_short observations and recompute R.
+    %     N_short = snapshotCounts(c);
+    %     X_short = X(:,1:N_short);
+    %     R_short = X_short*X_short'/N_short;
+    %
+    %     % Reapply the same three methods to the reduced dataset.
+    %     [P, eigenvalues] = doaSpectra(R_short, A, K);
+    %     eigSnapshots(:,c) = eigenvalues;  % Save results for the summary figure
+    %
+    %     % Plot the resulting spectra for this observation length.
+    %     subplot(1,numel(snapshotCounts),c);
+    %     plotSpectra(theta, P);
+    %     title(sprintf('N = %d snapshots', N_short));
+    %     if c == 1
+    %         legend(methods, 'Location','best');
+    %     end
+    %
+    %     % Print estimated angles to check how they change with N.
+    %     fprintf('\nN = %d snapshots:\n', N_short);
+    %     printDoAs(theta, P, K, methods, minProminence);
+    % end
+    %
+    %
+    % % Compare covariance eigenvalues for all three snapshot counts.
+    % figure('Color','w', 'Name',[files{i} ' - Snapshots eigenvalues']);
+    % plotEigenvalues(eigSnapshots, K);
+    % title('Covariance eigenvalues - number of snapshots');
+    % legend(compose('N = %d', snapshotCounts), 'Location','best');
 
     %---------------------------------------------------------------------
     %% PART III - ADDING NOISE
@@ -271,8 +271,6 @@ end
 %-------------------------------------------------------------------------
 %% FUNCTIONS
 %-------------------------------------------------------------------------
-% These functions avoid repeating the same estimation, plotting and
-% peak-detection steps. Only the input data change between experiments.
 
 function [P, eigenvalues] = doaSpectra(R, A, K)
 % Compute the three DoA spectra from one covariance matrix.
